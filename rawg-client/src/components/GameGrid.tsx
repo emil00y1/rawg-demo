@@ -1,6 +1,7 @@
 import React from "react";
 import apiClient from "../services/api-client";
 import { Text } from "@chakra-ui/react";
+// import useGames from "../hooks/useGames";
 
 interface Game {
   id: number;
@@ -13,6 +14,7 @@ interface GameResponse {
 const GameGrid = () => {
   const [games, setGames] = React.useState<Game[]>([]);
   const [error, setError] = React.useState("");
+
   React.useEffect(() => {
     apiClient
       .get<GameResponse>("/games")
