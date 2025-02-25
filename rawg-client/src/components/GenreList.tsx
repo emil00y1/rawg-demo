@@ -19,7 +19,7 @@ const GenreList = ({ onSelectedGenre, selectedGenre }: Props) => {
   const { data: genres, isLoading, error } = useGenres();
 
   const getColor = (genre: Genre) =>
-    selectedGenre?.id === genre.id ? "yellow" : "gray";
+    selectedGenre?.id === genre.id ? "green" : "gray";
 
   if (error) return null;
 
