@@ -89,12 +89,6 @@ function modifyGameResponse(games: Game[]) {
 }
 
 gameRouter.get("/", async (req, res) => {
-  const genreSlug = req.query.genres ? String(req.query.genres) : undefined;
-  const storeId = req.query.stores ? Number(req.query.stores) : undefined;
-  const parentPlatformId = req.query.parent_platforms
-    ? Number(req.query.parent_platforms)
-    : undefined;
-
   //query builder to get all games with their genres, parent_platforms, and stores
   const genreSlug = req.query.genres ? String(req.query.genres) : undefined;
   const storeId = req.query.stores ? Number(req.query.stores) : undefined;
