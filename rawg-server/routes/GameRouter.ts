@@ -4,6 +4,7 @@ import { AppDataSource } from "../startup/data-source";
 import { Game } from "../entities/Game";
 import { Store } from "../entities/Store";
 import { ParentPlatform } from "../entities/ParentPlatform";
+import { SelectQueryBuilder } from "typeorm";
 
 //interface for response object matching what our rawg-client expects
 interface ModifinedGame {
@@ -24,8 +25,23 @@ interface Response {
 const gameRouter = Router();
 const gameRepository = AppDataSource.getRepository(Game);
 
+const addGenreFilter = (
+  queryBuilder: SelectQueryBuilder<Game>,
+  genreSlug: string | undefined
+) => {
+  if (genreSlug) {
+    queryBuilder.andWhere("genres.slug = :genreSlug", { genreSlug });
+  }
+};
+
 gameRouter.get("/", async (req, res) => {
   //query builder to get all games with their genres, parent_platforms, and stores
+  const genreSlug = req.query.genres ? String(req.query.genres) : undefined;
+  const storeId = req.query.stores ? Number(req.query.stores) : undefined;
+  const parentPlatformId = req.query.parent_platforms
+    ? Number(req.query.parent_platforms)
+    : undefined;
+
   const queryBuilder = gameRepository
     .createQueryBuilder("game")
     .leftJoinAndSelect("game.genres", "genres")
